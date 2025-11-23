@@ -1,0 +1,44 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/components' as *;
+
+/* navbar.scss (Make sure to @use 'variables' or @import 'variables') */
+
+.navbar-container {
+  @include flex-between;
+  background: $primary-color;
+  padding: $spacing-sm $spacing-lg;
+
+  .navbar-logo {
+    font-size: $font-size-lg;
+    color: $white;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  .navbar-links {
+    display: flex;
+    gap: $spacing-md;
+  }
+
+  .navbar-btn {
+    background: $white;
+    color: $primary-color;
+    border: none;
+    border-radius: $border-radius-pill;
+    box-shadow: $box-shadow-light;
+    padding: 0.45rem 1.4rem;
+    font-size: $font-size-base;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all $transition-speed;
+    outline: none;
+
+    &:hover,
+    &:focus {
+      background: $primary-light;
+      color: $white;
+      box-shadow: $box-shadow-hover;
+      transform: translateY(-2px); // Add a subtle lift
+    }
+  }
+}

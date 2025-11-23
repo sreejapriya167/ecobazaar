@@ -1,0 +1,48 @@
+/* src/styles/_variables.scss */
+
+// 🎨 Color Palette
+$primary-color: #29a36a;   // Nav Green
+$primary-dark: #25587e;    // Nav Blue
+$primary-light: #55d187;   // ✅ ADDED BACK (Lighter Green)
+$accent-color: #f7c948;    // Nav Yellow
+
+$white: #ffffff;
+$text-dark: #25587e;       
+$text-light: #f8f9fa;
+
+// 🌈 Gradients
+$gradient-main: linear-gradient(90deg, #29a36a 60%, #25587e 100%);
+$shadow-color: rgba(23, 107, 54, 0.1);
+
+// ✨ Glass Effect
+$glass-bg: rgba(255, 255, 255, 0.15);
+$glass-bg-hover: rgba(255, 255, 255, 0.25);
+$glass-border: rgba(255, 255, 255, 0.3);
+$glass-border-hover: rgba(255, 255, 255, 0.6);
+$glass-blur: 12px;
+$glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+
+// 📐 Layout & Spacing
+$spacing-sm: 0.5rem;
+$spacing-md: 1.2rem;
+$spacing-lg: 2rem;
+$border-radius: 1.5rem; 
+$border-radius-pill: 999px;
+
+// Typography
+$font-primary: 'Montserrat', 'Roboto', Arial, sans-serif;
+$font-size-base: 1rem;
+$font-size-lg: 1.7rem;
+$font-size-xl: 2rem;
+
+// ✨ Effects
+$transition-speed: 0.25s ease;
+$box-shadow-light: 0 2px 7px rgba(23, 107, 54, 0.09);
+$box-shadow-hover: 0 4px 12px rgba(23, 107, 54, 0.23);
+
+// 🛠️ Mixins
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

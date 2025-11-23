@@ -1,0 +1,247 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/components' as *;
+
+// --- Map Tailwind-like Classes to Your Theme ---
+
+.max-w-5xl {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+// 1. Header & Text
+.text-4xl { font-size: 2.5rem; }
+.text-3xl { font-size: 2rem; }
+.text-2xl { font-size: 1.5rem; }
+.text-lg { font-size: 1.125rem; }
+.font-extrabold { font-weight: 800; }
+.font-bold { font-weight: 700; }
+.uppercase { text-transform: uppercase; }
+
+.text-green-700 { color: $primary-color; }
+.text-blue-600 { color: $primary-dark; }
+.text-red-600 { color: #e53935; }
+.text-gray-600 { color: #666; }
+.text-gray-500 { color: #888; }
+.text-emerald-600 { color: $primary-light; }
+
+// 2. Grid System
+.grid {
+  display: grid;
+  gap: 1.5rem;
+}
+.lg\:grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+.sm\:grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+
+@media (max-width: 1024px) {
+  .lg\:grid-cols-4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .lg\:grid-cols-4, .sm\:grid-cols-2 { grid-template-columns: 1fr; }
+}
+
+// 3. Cards & Glassmorphism
+.bg-white {
+  @include glass-panel;
+  background: white; // Solid backing for charts
+}
+
+.shadow { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+.shadow-xl { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+.rounded-3xl { border-radius: 1.5rem; }
+.p-6 { padding: 1.5rem; }
+.mt-3 { margin-top: 0.75rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.mb-10 { margin-bottom: 2.5rem; }
+
+// 4. Badges (The getBadgeColor Logic)
+.gold-badge {
+  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+}
+.silver-badge {
+  background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+  .text-white\/90, .text-3xl { color: #444; } // Dark text for silver
+}
+.bronze-badge {
+  background: linear-gradient(135deg, #e6b980 0%, #eacda3 100%);
+}
+
+// 5. Buttons
+.bg-green-600 { background-color: $primary-color; }
+.bg-blue-600 { background-color: $primary-dark; }
+.hover\:bg-green-700:hover { background-color: darken($primary-color, 10%); }
+.hover\:bg-blue-700:hover { background-color: darken($primary-dark, 10%); }
+
+.rounded-2xl { border-radius: 1rem; }
+.py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+.transition-all { transition: all 0.3s ease; }
+.hover\:scale-\[1\.02\]:hover { transform: scale(1.02); }
+
+// 6. Request Forms (Admin/Seller)
+.from-purple-600 { --tw-gradient-from: #9333ea; }
+.to-indigo-600 { --tw-gradient-to: #4f46e5; }
+.from-teal-600 { --tw-gradient-from: #0d9488; }
+.to-cyan-600 { --tw-gradient-to: #0891b2; }
+
+.bg-gradient-to-r {
+  background-image: linear-gradient(to right, var(--tw-gradient-from), var(--tw-gradient-to));
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+// ... existing styles ...
+
+// ADMIN STYLES
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+}
+
+.admin-section {
+  padding: 1.5rem;
+  background: white;
+  min-height: 300px;
+
+  h3 {
+    color: $primary-dark;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid rgba(0,0,0,0.05);
+    padding-bottom: 0.5rem;
+  }
+}
+
+.empty-state {
+  text-align: center;
+  color: #888;
+  padding: 2rem;
+  font-style: italic;
+}
+
+// Admin Table (Sellers)
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  
+  th { text-align: left; color: #888; font-weight: 500; padding-bottom: 0.5rem; }
+  td { padding: 1rem 0; border-bottom: 1px solid #eee; color: $primary-dark; }
+  
+  .btn-sm { padding: 0.4rem 1rem; font-size: 0.85rem; }
+}
+
+// Pending Product Cards
+.pending-product-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: #f9f9f9;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  
+  .prod-info {
+    h4 { color: $primary-dark; margin-bottom: 0.2rem; }
+    p { color: $primary-color; font-size: 0.9rem; font-weight: 600; }
+  }
+  
+  .btn-sm { padding: 0.4rem 1rem; }
+}
+// 7. Loader
+.loader {
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 30px;
+  color: $primary-color;
+  animation: l1 1s linear infinite;
+}
+
+// --- Seller Specific Styles ---
+
+.seller-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  
+  h1 { font-size: 2.5rem; color: $primary-color; font-weight: 700; }
+  
+  .btn-green {
+    background: $primary-color;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
+  }
+}
+
+.seller-stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+
+  .stat-box {
+    background: white;
+    border: 1px solid #eee;
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    
+    label { font-size: 0.9rem; color: #777; display: block; margin-bottom: 0.5rem; }
+    .val { font-size: 2.2rem; font-weight: 700; color: #333; }
+    
+    .text-green { color: $primary-color; }
+    .text-orange { color: #f57c00; }
+    .text-purple { color: #7e57c2; }
+    .text-gold { color: #ffa000; }
+  }
+}
+
+.seller-bottom-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.5rem;
+  
+  @media(max-width: 900px) { grid-template-columns: 1fr; }
+}
+
+.chart-panel {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid #eee;
+  
+  .panel-head {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    h3 { font-size: 1.2rem; color: #333; }
+    span { font-size: 0.8rem; color: #888; }
+  }
+}
+
+.badge-panel {
+  background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+  padding: 2rem;
+  text-align: center;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #eee;
+  
+  p { color: #777; }
+  
+  .badge-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0.5rem 0;
+    // Gradient text
+    background: linear-gradient(to right, #8e2de2, #4a00e0);
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .sub { font-size: 0.85rem; max-width: 80%; }
+}
+@keyframes l1 { to { opacity: 0; } }

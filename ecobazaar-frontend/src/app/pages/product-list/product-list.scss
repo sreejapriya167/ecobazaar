@@ -1,0 +1,179 @@
+@use '../../../styles/variables' as *;
+
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+// --- Header ---
+.products-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+
+  .title-section {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    h1 { color: $primary-color; font-size: 2.2rem; font-weight: 700; }
+    .leaf-icon { font-size: 2rem; }
+  }
+}
+
+// --- Search Bar ---
+.search-bar-container {
+  display: flex;
+  align-items: center;
+  padding: 0.8rem 1.5rem;
+  background: white;
+  border-radius: 999px; // Pill shape
+  border: 1px solid #eee;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  min-width: 400px;
+
+  .search-icon { color: #888; margin-right: 0.8rem; }
+  
+  input {
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    flex: 1;
+    font-family: $font-primary;
+  }
+}
+
+.eco-toggle {
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
+  border-left: 1px solid #ddd;
+  padding-left: 1rem;
+  
+  label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #555;
+    span { color: $primary-color; }
+  }
+}
+
+// --- Grid ---
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 2rem;
+}
+
+// --- Card Design (Matches Reference) ---
+.product-card {
+  background: white;
+  border-radius: 24px; // Large rounded corners
+  padding: 1.5rem;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.04); // Soft shadow
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(41, 163, 106, 0.15);
+  }
+
+  // Certified Badge
+  .badge-pill {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    background: $primary-color;
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    z-index: 10;
+    
+    span { font-size: 1rem; }
+  }
+
+  // Image
+  .img-container {
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    
+    img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+    }
+  }
+
+  // Details
+  .card-details {
+    text-align: center;
+    
+    h3 {
+      font-size: 1.1rem;
+      color: #333;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+    
+    .price {
+      font-size: 1.4rem;
+      color: $primary-color;
+      font-weight: 800;
+      margin-bottom: 0.8rem;
+    }
+    
+    .impact-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 0.5rem;
+    }
+    
+    .status-text {
+      font-size: 0.8rem;
+      color: #999;
+      font-style: italic;
+      margin-bottom: 1rem;
+      
+      &.approved { color: #888; font-style: normal; }
+    }
+    
+    .add-btn {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #eee;
+      background: white;
+      border-radius: 12px;
+      font-weight: 600;
+      color: $primary-color;
+      cursor: pointer;
+      transition: 0.2s;
+      
+      &:hover {
+        background: $primary-color;
+        color: white;
+      }
+    }
+  }
+}

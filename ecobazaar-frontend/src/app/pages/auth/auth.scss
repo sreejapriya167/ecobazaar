@@ -1,0 +1,209 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/components' as *; // Assuming you have mixins here
+
+// --- 1. Main Container ---
+.container {
+  background-color: $white;
+  border-radius: $border-radius; // Uses your 1.5rem radius
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 
+              0 10px 10px rgba(0,0,0,0.22);
+  position: relative;
+  overflow: hidden;
+  width: 900px;
+  max-width: 100%;
+  min-height: 600px;
+  margin: 2rem auto;
+  font-family: $font-primary; // 'Montserrat'
+}
+
+// --- 2. Form Styling ---
+.form-container {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  transition: all 0.6s ease-in-out;
+}
+
+form {
+  background: $white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 0 50px;
+  text-align: center;
+
+  h1 {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: $primary-dark; // Using the Blue for titles looks professional
+  }
+  
+  span {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 1.5rem;
+  }
+}
+
+// --- 3. Trendy Inputs ---
+input {
+  background: #f0f4f8; // Very light blue-grey
+  border: 2px solid transparent; // Prepared for hover
+  padding: 12px 15px;
+  margin: 8px 0;
+  width: 100%;
+  border-radius: 1rem; // Slightly rounded inputs
+  outline: none;
+  transition: $transition-speed;
+  font-family: $font-primary;
+
+  &:focus {
+    background: $white;
+    border-color: $primary-color; // Green border on focus
+    box-shadow: 0 0 0 4px rgba(41, 163, 106, 0.1);
+  }
+}
+
+// --- 4. Buttons (The Fun Part) ---
+button {
+  margin-top: 1.5rem;
+  padding: 0.8rem 2.5rem;
+  font-family: $font-primary;
+  font-weight: 600;
+  border-radius: $border-radius;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: transform 80ms ease-in, background 0.3s, color 0.3s;
+  border: none;
+  
+  // Default "Sign In" / "Register" buttons
+  background: $primary-color; // Green
+  color: $white;
+  box-shadow: 0 4px 15px rgba(41, 163, 106, 0.3);
+
+  &:hover {
+    background: $accent-color; // ✨ YELLOW HOVER (Matches Navbar)
+    color: $primary-dark;      // Blue text on Yellow
+    transform: translateY(-2px);
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+// Outline buttons (inside the gradient overlay)
+button.ghost {
+  background: transparent;
+  border: 2px solid $white;
+  color: $white;
+  box-shadow: none;
+
+  &:hover {
+    background: $white;
+    color: $primary-dark;
+  }
+}
+
+// --- 5. The Gradient Overlay ---
+.overlay-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  transition: transform 0.6s ease-in-out;
+  z-index: 100;
+}
+
+.overlay {
+  // 🌈 THE BIG CHANGE: Use your Navbar Gradient here
+  background: $gradient-main; 
+  color: $white;
+  position: relative;
+  left: -100%;
+  height: 100%;
+  width: 200%;
+  transform: translateX(0);
+  transition: transform 0.6s ease-in-out;
+
+  h1 {
+    color: $white;
+    font-size: 2.5rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  p {
+    margin: 20px 0 30px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+}
+
+// Layout & Animation Helpers
+.overlay-panel {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 40px;
+  text-align: center;
+  top: 0;
+  height: 100%;
+  width: 50%;
+  transform: translateX(0);
+  transition: transform 0.6s ease-in-out;
+}
+
+.overlay-left { transform: translateX(-20%); }
+.overlay-right { right: 0; transform: translateX(0); }
+.sign-in-container { left: 0; width: 50%; z-index: 2; }
+.sign-up-container { left: 0; width: 50%; opacity: 0; z-index: 1; }
+
+// Active State
+.container.right-panel-active {
+  .sign-in-container { transform: translateX(100%); }
+  .sign-up-container { transform: translateX(100%); opacity: 1; z-index: 5; animation: show 0.6s; }
+  .overlay-container { transform: translateX(-100%); }
+  .overlay { transform: translateX(50%); }
+  .overlay-left { transform: translateX(0); }
+  .overlay-right { transform: translateX(20%); }
+}
+
+@keyframes show {
+  0%, 49.99% { opacity: 0; z-index: 1; }
+  50%, 100% { opacity: 1; z-index: 5; }
+}
+// Add this at the bottom of your file, or inside 'form'
+
+.msg-box {
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  width: 100%;
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+}
+
+.success {
+  background-color: rgba(41, 163, 106, 0.15); // Light transparent green
+  color: #29a36a; // Your primary green
+  border: 1px solid #29a36a;
+}
+
+.error {
+  background-color: rgba(229, 115, 115, 0.15); // Light transparent red
+  color: #c62828; // Dark red
+  border: 1px solid #c62828;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

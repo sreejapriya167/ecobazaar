@@ -1,0 +1,17 @@
+<nav class="navbar-container">
+  <span class="navbar-logo" routerLink="/">EcoBazaar</span>
+
+  <div class="navbar-links">
+    <a routerLink="/" class="navbar-btn">Home</a>
+
+    <a routerLink="/dashboard" *ngIf="auth.isLoggedIn()" class="navbar-btn">Dashboard</a>
+    <a routerLink="/cart" *ngIf="auth.isLoggedIn()" class="navbar-btn">Cart</a>
+
+    <a routerLink="/login" *ngIf="!auth.isLoggedIn()" class="navbar-btn">Login</a>
+
+    <div *ngIf="auth.isLoggedIn()" class="navbar-user">
+      <span class="navbar-hello">Hi, {{ auth.getName() }}</span>
+      <button (click)="auth.logout()" class="navbar-btn navbar-logout-btn">Logout</button>
+    </div>
+  </div>
+</nav>

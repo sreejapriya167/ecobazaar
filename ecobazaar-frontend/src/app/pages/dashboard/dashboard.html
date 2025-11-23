@@ -1,0 +1,218 @@
+<div class="request-card glass-panel">
+        <div class="req-icon"></div>
+        <h4>Become a Seller</h4>
+        <p>Start selling your own eco-friendly products.</p>
+        
+        <div *ngIf="sellerRequestStatus === 'PENDING'; else sellerBtn">
+          <button class="glass-btn btn-disabled" disabled>Request Pending...</button>
+        </div>
+        
+        <ng-template #sellerBtn>
+          <button class="glass-btn" (click)="requestSeller()">Apply Now</button>
+        </ng-template>
+      </div>
+
+      <div class="request-card glass-panel">
+        <div class="req-icon"></div>
+        <h4>Become an Admin</h4>
+        <p>Help moderate the community.</p>
+
+        <div *ngIf="adminRequestStatus === 'PENDING'; else adminBtn">
+          <button class="glass-btn btn-disabled" disabled>Request Pending...</button>
+        </div>
+
+        <ng-template #adminBtn>
+          <button class="glass-btn btn-outline" (click)="requestAdmin()">Apply Now</button>
+        </ng-template>
+      </div>
+<div class="dashboard-container animate-in">
+  
+  <header class="dash-header glass-panel">
+    <div class="header-content">
+      <h1>Hello, {{ name }} 👋</h1>
+      <p class="role-badge">Current Role: <strong>{{ role }}</strong></p>
+    </div>
+    <div *ngIf="role === 'SELLER'" class="header-actions">
+      <button class="glass-btn btn-yellow" routerLink="/add-product">+ Add Product</button>
+    </div>
+  </header>
+
+  <div *ngIf="role === 'ADMIN'">
+    
+    <div class="admin-grid">
+      
+      <div class="admin-section glass-panel">
+        <h3>👨‍💼 Pending Seller Requests</h3>
+        
+        <div *ngIf="pendingSellers.length === 0" class="empty-state">
+          <p>No pending seller requests.</p>
+        </div>
+
+        <table class="admin-table" *ngIf="pendingSellers.length > 0">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of pendingSellers">
+              <td>{{ user.name }}</td>
+              <td>{{ user.email }}</td>
+              <td>
+                <button class="glass-btn btn-sm" (click)="onApproveSeller(user.id)">Approve</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="admin-section glass-panel">
+        <h3>📦 Pending Products</h3>
+
+        <div *ngIf="pendingProducts.length === 0" class="empty-state">
+          <p>All products are approved.</p>
+        </div>
+
+        <div class="product-approval-list" *ngIf="pendingProducts.length > 0">
+          <div class="pending-product-card" *ngFor="let product of pendingProducts">
+            <div class="prod-info">
+              <h4>{{ product.name }}</h4>
+              <p>${{ product.price }} • {{ product.category }}</p>
+            </div>
+            <button class="glass-btn btn-sm btn-yellow" (click)="onApproveProduct(product.id)">
+              Approve
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div *ngIf="role !== 'ADMIN'">
+    
+    <div class="stats-grid">
+      <div class="stat-card glass-card">
+        <div class="stat-icon c-green"><span class="material-icons">shopping_bag</span></div>
+        <div class="stat-info">
+          <h3>{{ report?.totalPurchase || 0 }}</h3>
+          <p>Total Orders</p>
+        </div>
+      </div>
+
+      <div class="stat-card glass-card">
+        <div class="stat-icon c-blue"><span class="material-icons">payments</span></div>
+        <div class="stat-info">
+          <h3>${{ report?.totalSpent || 0 }}</h3>
+          <p>Total Spent</p>
+        </div>
+      </div>
+
+      <div class="stat-card glass-card">
+        <div class="stat-icon c-teal"><span class="material-icons">eco</span></div>
+        <div class="stat-info">
+          <h3>{{ report?.totalCarbonSaved || 0 }}kg</h3>
+          <p>Carbon Saved</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="requests-section" *ngIf="role === 'USER'">
+      <h3>Upgrade Your Account</h3>
+      <div class="request-grid">
+
+        <div class="request-card glass-panel">
+          <div class="req-icon">🏪</div>
+          <h4>Become a Seller</h4>
+          <p>Start selling your own eco-friendly products.</p>
+          
+          <div *ngIf="sellerRequestStatus === 'PENDING'; else sellerBtn">
+            <button class="glass-btn btn-disabled" disabled>Request Pending...</button>
+          </div>
+          <ng-template #sellerBtn>
+            <button class="glass-btn" (click)="requestSeller()">Apply Now</button>
+          </ng-template>
+        </div>
+
+        <div class="request-card glass-panel">
+          <div class="req-icon">🛡️</div>
+          <h4>Become an Admin</h4>
+          <p>Help moderate the community.</p>
+
+          <div *ngIf="adminRequestStatus === 'PENDING'; else adminBtn">
+            <button class="glass-btn btn-disabled" disabled>Request Pending...</button>
+          </div>
+          <ng-template #adminBtn>
+            <button class="glass-btn btn-outline" (click)="requestAdmin()">Apply Now</button>
+          </ng-template>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+<div *ngIf="role === 'SELLER'" class="seller-dashboard">
+    
+    <div class="seller-header">
+      <h1>Seller Dashboard</h1>
+      <button class="glass-btn btn-green" routerLink="/add-product">
+        + Add New Product
+      </button>
+    </div>
+
+    <div class="seller-stats-row">
+      <div class="stat-box">
+        <label>Total Products</label>
+        <div class="val">3</div>
+      </div>
+      
+      <div class="stat-box">
+        <label>Eco Certified</label>
+        <div class="val text-green">2</div>
+      </div>
+      
+      <div class="stat-box">
+        <label>Pending Certification</label>
+        <div class="val text-orange">0</div>
+      </div>
+      
+      <div class="stat-box">
+        <label>Total Orders</label>
+        <div class="val text-purple">3</div>
+      </div>
+      
+      <div class="stat-box">
+        <label>Revenue (Lifetime)</label>
+        <div class="val text-gold">₹500</div>
+      </div>
+    </div>
+
+    <div class="seller-bottom-grid">
+      
+      <div class="chart-panel glass-panel">
+        <div class="panel-head">
+          <h3>Revenue (Last 14 Days)</h3>
+          <span>Daily trend</span>
+        </div>
+        <div style="height: 200px; display:flex; align-items:flex-end; gap:10px; padding-top:20px;">
+             <div style="width:30px; height:40%; background:#e0e0e0; border-radius:5px;"></div>
+             <div style="width:30px; height:60%; background:#e0e0e0; border-radius:5px;"></div>
+             <div style="width:30px; height:30%; background:#e0e0e0; border-radius:5px;"></div>
+             <div style="width:30px; height:80%; background:#29a36a; border-radius:5px;"></div>
+             <div style="width:30px; height:50%; background:#e0e0e0; border-radius:5px;"></div>
+        </div>
+      </div>
+
+      <div class="badge-panel glass-panel">
+        <p>Your Seller Badge</p>
+        <h2 class="badge-title">New Seller</h2>
+        <p class="sub">Keep selling eco-friendly products to level up!</p>
+      </div>
+
+    </div>
+
+  </div>

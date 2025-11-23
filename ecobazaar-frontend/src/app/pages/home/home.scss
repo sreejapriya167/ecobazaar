@@ -1,0 +1,65 @@
+$primary-green: #29a36a;
+$secondary-blue: #25587e;
+$accent-yellow: #f7c948;
+$background-light: #f5fbf7;
+$text-dark: #22313f;
+$text-muted: #607d8b;
+$border-radius: 1.25rem;
+$shadow: 0 2px 12px rgba(52, 89, 66, 0.10);
+
+.home-container {
+  background: $background-light;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.hero-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 1.5rem;
+  text-align: center;
+  h1 {
+    color: $primary-green;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1.1rem;
+    text-shadow: $shadow;
+  }
+  p {
+    color: $text-muted;
+    font-size: 1.4rem;
+    margin-bottom: 2.1rem;
+  }
+  .cta-btn {
+    background: $secondary-blue;
+    color: white;
+    font-size: 1.18rem;
+    padding: 0.75rem 2.5rem;
+    border-radius: $border-radius;
+    box-shadow: $shadow;
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    transition: background 0.2s, color 0.2s;
+    &:hover {
+      background: $accent-yellow;
+      color: $primary-green;
+    }
+  }
+}
+
+.site-footer {
+  background: $secondary-blue;
+  color: white;
+  padding: 1rem 0;
+  text-align: center;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  border-top-left-radius: $border-radius;
+  border-top-right-radius: $border-radius;
+}

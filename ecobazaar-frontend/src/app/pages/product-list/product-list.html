@@ -1,0 +1,51 @@
+<div class="page-container animate-in">
+  
+  <header class="products-header">
+    <div class="title-section">
+      <span class="leaf-icon">🌿</span>
+      <h1>EcoBazaar Products</h1>
+    </div>
+
+    <div class="search-bar-container glass-panel">
+      <span class="material-icons search-icon">search</span>
+      <input type="text" placeholder="Search eco products..." (input)="onSearch($event)">
+      
+      <div class="eco-toggle">
+        <input type="checkbox" id="ecoCheck" (change)="toggleEcoOnly()">
+        <label for="ecoCheck">
+          <span class="material-icons">eco</span> Eco Only
+        </label>
+      </div>
+    </div>
+  </header>
+
+  <div class="products-grid">
+    <div class="product-card" *ngFor="let product of filteredProducts">
+      
+      <div class="badge-pill" *ngIf="product.ecoCertified">
+        <span class="material-icons">verified</span> Certified
+      </div>
+
+      <div class="img-container">
+        <img [src]="product.imageUrl || 'assets/placeholder.png'" alt="{{ product.name }}">
+      </div>
+
+      <div class="card-details">
+        <h3>{{ product.name }}</h3>
+        <div class="price">₹{{ product.price }}</div>
+        
+        <div class="impact-row">
+          <span class="globe">🌍</span>
+          <span>{{ product.carbonImpact || '0.5' }} kg CO₂ impact</span>
+        </div>
+
+        <div class="status-text" [class.approved]="product.ecoCertified">
+          {{ product.ecoCertified ? 'Eco-approved product' : 'Awaiting certification' }}
+        </div>
+
+        <button class="add-btn">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+
+</div>

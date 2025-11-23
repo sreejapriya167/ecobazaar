@@ -1,0 +1,173 @@
+/* ~ angular-project/src/styles/_components.scss */
+@use 'variables' as *;
+
+// --- 1. The Core Glass Panel Mixin ---
+@mixin glass-panel {
+  background: $glass-bg;
+  backdrop-filter: blur($glass-blur);
+  -webkit-backdrop-filter: blur($glass-blur); // For Safari
+  border: 1px solid $glass-border;
+  border-radius: $border-radius;
+  box-shadow: $glass-shadow;
+  transition: all $transition-speed;
+  color: $text-light;
+}
+
+// --- 2. Page Container ---
+// Use this as the main wrapper on pages like home, dashboard, admin
+.page-container {
+  @include glass-panel;
+  width: calc(100% - 4rem);
+  max-width: 1300px;
+  margin: 2rem auto;
+  padding: 2rem;
+  
+  h1 {
+    font-size: 2.5rem;
+    color: $white;
+    border-bottom: 2px solid $primary-light;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+// --- 3. Glass Card ---
+// Perfect for product-list, services, or dashboard widgets
+.glass-card {
+  @include glass-panel;
+  padding: 1.5rem;
+  
+  &:hover {
+    background: $glass-bg-hover;
+    border-color: $glass-border-hover;
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.3);
+  }
+}
+
+// --- 4. Glass Form ---
+// Ideal for your login and register pages
+.glass-form-container {
+  @include glass-panel;
+  max-width: 450px;
+  margin: 4rem auto; // Center it on the page
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  
+  .form-title {
+    font-size: 2rem;
+    color: $white;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  label {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: $text-light;
+  }
+  
+  input {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid $glass-border;
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    color: $white;
+    transition: all $transition-speed;
+    
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+    
+    &:focus {
+      outline: none;
+      border-color: $primary-light;
+      box-shadow: 0 0 10px rgba($primary-light, 0.5);
+    }
+  }
+}
+
+// --- 5. Glass Button ---
+// A primary button for forms, cart, etc.
+.glass-btn {
+  @include glass-panel;
+  background: $primary-color;
+  color: $white;
+  border-color: $primary-light;
+  padding: 0.8rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 1rem;
+  
+  &:hover {
+    background: $primary-light;
+    color: $primary-color;
+    transform: scale(1.03);
+  }
+  
+  // A secondary "outline" style
+  &.btn-outline {
+    background: transparent;
+    color: $primary-light;
+    
+    &:hover {
+      background: rgba($primary-light, 0.15);
+      color: $primary-light;
+    }
+  }
+  
+  // A pulsing "call to action"
+  &.btn-cta {
+    animation: pulse 2s infinite;
+  }
+}
+
+// --- 6. Glass Table ---
+// For admin pages or cart summary
+.glass-table-container {
+  @include glass-panel;
+  width: 100%;
+  padding: 1.5rem;
+  overflow-x: auto; // For responsive tables
+}
+
+.glass-table {
+  width: 100%;
+  border-collapse: collapse;
+  
+  th, td {
+    padding: 1rem 1.2rem;
+    text-align: left;
+  }
+  
+  thead {
+    th {
+      color: $primary-light;
+      font-size: 1.1rem;
+      border-bottom: 2px solid $glass-border;
+    }
+  }
+  
+  tbody {
+    tr {
+      transition: background $transition-speed;
+      &:not(:last-child) {
+        border-bottom: 1px solid $glass-border;
+      }
+      &:hover {
+        background: $glass-bg-hover;
+      }
+    }
+  }
+}
