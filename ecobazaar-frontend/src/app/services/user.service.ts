@@ -34,24 +34,34 @@ export class UserService {
     );
   }
 
-
-
-  // 👇 FIX 3: Add this function for the Admin Button
-  requestAdminAccess(): Observable<any> {
-    // Simulating a backend call since you don't have an AdminRequestController yet
-    return new Observable(observer => {
-      setTimeout(() => {
-        observer.next("Request sent");
-        observer.complete();
-      }, 1000);
-    });
-  }
   checkSellerRequestStatus(): Observable<boolean> {
     return this.http.get<boolean>(
       `${this.apiUrl}/seller-request/has-pending`, 
       { headers: this.getHeaders() }
     );
   }
+  // src/app/services/user.service.ts
+
+  // ... existing code ...
+
+  // 👇 UPDATE THIS FUNCTION (No more setTimeout/simulation)
+  requestAdminAccess(): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/admin-request/request`, 
+      {}, 
+      { headers: this.getHeaders(), responseType: 'text' }
+    );
+  }
+
+  // 👇 ADD THIS FUNCTION (To check status on load)
+  checkAdminRequestStatus(): Observable<boolean> {
+    return this.http.get<boolean>(
+      `${this.apiUrl}/admin-request/has-pending`, 
+      { headers: this.getHeaders() }
+    );
+  }
+
+  // ... existing code ...
   // Check if user already has a pending request
   checkPendingRequest(role: 'ROLE_ADMIN' | 'ROLE_SELLER'): Observable<boolean> {
      return this.http.get<boolean>(
@@ -67,10 +77,18 @@ export class UserService {
     return this.http.get<any[]>(`${this.apiUrl}/admin/users`, { headers: this.getHeaders() });
   }
 
+ // ... inside UserService class ...
+
+  // 👇 UPDATE THIS FUNCTION
+  // Change the URL from `${this.baseUrl}/products` to `${this.baseUrl}/admin/products`
   getProducts(): Observable<any[]> {
-    // If you don't have a specific "all products" admin endpoint, reuse the public one
-    return this.http.get<any[]>(`${this.apiUrl}/products`, { headers: this.getHeaders() });
+    return this.http.get<any[]>(
+      `${this.apiUrl}/admin/products`, 
+      { headers: this.getHeaders() }
+    );
   }
+
+  // ... rest of the code ...
 
   approveSeller(userId: number): Observable<any> {
     return this.http.put(`${this.apiUrl}/admin/approveSeller/${userId}`, {}, { headers: this.getHeaders() });

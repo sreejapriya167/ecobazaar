@@ -1,0 +1,69 @@
+<div class="dashboard-container animate-in">
+  
+  <header class="dash-header">
+    <div class="header-content">
+      <h1>Hello, {{ name }} 👋</h1>
+      <p class="role-badge">My Eco Impact</p>
+    </div>
+  </header>
+
+  <div class="stats-grid">
+    <div class="stat-card glass-card">
+      <div class="stat-icon c-green"><span class="material-icons">shopping_bag</span></div>
+      <div class="stat-info">
+        <h3>{{ report?.totalPurchase || 0 }}</h3>
+        <p>Total Orders</p>
+      </div>
+    </div>
+
+    <div class="stat-card glass-card">
+      <div class="stat-icon c-blue"><span class="material-icons">payments</span></div>
+      <div class="stat-info">
+        <h3>${{ report?.totalSpent || 0 }}</h3>
+        <p>Total Spent</p>
+      </div>
+    </div>
+
+    <div class="stat-card glass-card">
+      <div class="stat-icon c-teal"><span class="material-icons">eco</span></div>
+      <div class="stat-info">
+        <h3>{{ report?.totalCarbonSaved || 0 }}kg</h3>
+        <p>Carbon Saved</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="requests-section">
+    <h3>Upgrade Your Account</h3>
+    <div class="request-grid">
+
+      <div class="request-card">
+        <div class="req-icon">🏪</div>
+        <h4>Become a Seller</h4>
+        <p>Start selling your own eco-friendly products.</p>
+        
+        <div *ngIf="sellerRequestStatus === 'PENDING'; else sellerBtn">
+          <button class="glass-btn btn-disabled" disabled>Request Pending...</button>
+        </div>
+        <ng-template #sellerBtn>
+          <button class="glass-btn" (click)="requestSeller()">Apply Now</button>
+        </ng-template>
+      </div>
+
+      <div class="request-card">
+        <div class="req-icon">🛡️</div>
+        <h4>Become an Admin</h4>
+        <p>Help moderate the community.</p>
+
+        <div *ngIf="adminRequestStatus === 'PENDING'; else adminBtn">
+          <button class="glass-btn btn-disabled" disabled>Request Pending...</button>
+        </div>
+        <ng-template #adminBtn>
+          <button class="glass-btn btn-outline" (click)="requestAdmin()">Apply Now</button>
+        </ng-template>
+      </div>
+
+    </div>
+  </div>
+
+</div>

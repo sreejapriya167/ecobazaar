@@ -1,0 +1,63 @@
+<div class="dashboard-container animate-in">
+  
+  <header class="dash-header">
+    <div class="header-content">
+      <h1>Admin Command Center 🛡️</h1>
+      <p class="role-badge">Welcome back, <strong>Admin</strong></p>
+    </div>
+  </header>
+
+  <div class="admin-grid">
+    
+    <div class="admin-section">
+      <h3>👨‍💼 Pending Sellers</h3>
+      
+      <div *ngIf="pendingSellers.length === 0" class="empty-state">
+        <p>No pending seller requests.</p>
+      </div>
+
+      <table class="admin-table" *ngIf="pendingSellers.length > 0">
+        <thead>
+          <tr>
+            <th>User Details</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of pendingSellers">
+            <td>
+              <div class="user-row">
+                <span class="u-name">{{ user.name }}</span>
+                <span class="u-email">{{ user.email }}</span>
+              </div>
+            </td>
+            <td>
+              <button class="glass-btn btn-sm" (click)="onApproveSeller(user.id)">Approve</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="admin-section">
+      <h3>📦 Pending Products</h3>
+
+      <div *ngIf="pendingProducts.length === 0" class="empty-state">
+        <p>All products are approved and live.</p>
+      </div>
+
+      <div class="product-approval-list" *ngIf="pendingProducts.length > 0">
+        <div class="pending-product-card" *ngFor="let product of pendingProducts">
+          <div class="prod-info">
+            <h4>{{ product.name }}</h4>
+            <p>${{ product.price }} • {{ product.category }}</p>
+          </div>
+          <button class="glass-btn btn-sm btn-yellow" (click)="onApproveProduct(product.id)">
+            Approve
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

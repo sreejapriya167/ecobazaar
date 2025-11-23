@@ -1,0 +1,64 @@
+<div class="dashboard-container animate-in">
+  
+  <header class="dash-header glass-panel">
+    <div class="header-content">
+      <h1>Hello, {{ name }} 👋</h1>
+      <p class="role-badge">Current Role: <strong>SELLER</strong></p>
+    </div>
+    <div class="header-actions">
+      <button class="glass-btn btn-yellow" routerLink="/add-product">+ Add New Product</button>
+    </div>
+  </header>
+
+  <div class="seller-stats-row">
+    <div class="stat-box">
+      <label>Total Products</label>
+      <div class="val">{{ totalProducts }}</div>
+    </div>
+    
+    <div class="stat-box">
+      <label>Eco Certified</label>
+      <div class="val text-green">{{ ecoCertifiedCount }}</div>
+    </div>
+    
+    <div class="stat-box">
+      <label>Pending Certification</label>
+      <div class="val text-orange">{{ pendingCount }}</div>
+    </div>
+    
+    <div class="stat-box">
+      <label>Total Orders</label>
+      <div class="val text-purple">{{ totalOrders }}</div>
+    </div>
+    
+    <div class="stat-box">
+      <label>Revenue (Lifetime)</label>
+      <div class="val text-gold">₹{{ revenue }}</div>
+    </div>
+  </div>
+
+  <div class="seller-bottom-grid">
+    
+    <div class="chart-panel glass-panel">
+      <div class="panel-head">
+        <h3>Revenue (Last 14 Days)</h3>
+        <span>Daily trend</span>
+      </div>
+      <div style="height: 200px; display:flex; align-items:flex-end; gap:10px; padding-top:20px;">
+            <div style="width:30px; height:40%; background:#e0e0e0; border-radius:5px;"></div>
+            <div style="width:30px; height:60%; background:#e0e0e0; border-radius:5px;"></div>
+            <div style="width:30px; height:30%; background:#e0e0e0; border-radius:5px;"></div>
+            <div style="width:30px; height:80%; background:#29a36a; border-radius:5px;"></div>
+            <div style="width:30px; height:50%; background:#e0e0e0; border-radius:5px;"></div>
+      </div>
+    </div>
+
+    <div class="badge-panel glass-panel">
+      <p>Your Seller Badge</p>
+      <h2 class="badge-title">New Seller</h2>
+      <p class="sub">Keep selling eco-friendly products to level up!</p>
+    </div>
+
+  </div>
+
+</div>
