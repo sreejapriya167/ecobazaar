@@ -87,7 +87,12 @@ export class UserService {
       { headers: this.getHeaders() }
     );
   }
-
+getSellerProducts(): Observable<any[]> {
+    return this.http.get<any[]>(
+      `${this.apiUrl}/products/seller`, // This matches your SecurityConfig rule!
+      { headers: this.getHeaders() }
+    );
+  }
   // ... rest of the code ...
 
   approveSeller(userId: number): Observable<any> {

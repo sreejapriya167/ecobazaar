@@ -35,12 +35,12 @@ export class SellerDashboardComponent implements OnInit {
     this.loadSellerStats();
   }
 
+ // ... inside class ...
+
   loadSellerStats() {
-    // Re-using the 'getProducts' endpoint but filtering for this seller
-    // ideally, create a specific backend endpoint like /api/products/seller/stats
-    this.userService.getProducts().subscribe({
+    // 👇 CHANGE THIS LINE: Use 'getSellerProducts()' instead of 'getProducts()'
+    this.userService.getSellerProducts().subscribe({
       next: (products) => {
-        // Filter logic would happen on backend usually, but here is how we calculate:
         this.totalProducts = products.length;
         this.ecoCertifiedCount = products.filter((p: any) => p.ecoCertified).length;
         this.pendingCount = products.filter((p: any) => !p.ecoCertified).length;
