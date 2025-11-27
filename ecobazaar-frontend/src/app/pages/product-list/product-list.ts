@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Product } from '../../models/products';
 import { ProductService } from '../../services/product';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-product-list',
@@ -14,19 +15,22 @@ import { ProductService } from '../../services/product';
 })
 export class ProductList implements OnInit {
 
-  // Data Source
   products: Product[] = [];
-  filteredProducts: Product[] = []; // Matches HTML *ngFor
+  filteredProducts: Product[] = [];
 
-  // Filter States
   searchTerm = '';
   isEcoOnly = false;
 
-  // UI States
   loading = false;
   error: string | null = null;
 
-  constructor(private productService: ProductService) {}
+  // productId -> quantity shown on card
+  quantityMap: { [productId: number]: number } = {};
+
+  constructor(
+    private productService: ProductService,
+    private cartService: CartService
+  ) {}
 
   ngOnInit(): void {
     this.loadProducts();
@@ -37,7 +41,7 @@ export class ProductList implements OnInit {
     this.productService.getAll().subscribe({
       next: (data) => {
         this.products = data;
-        this.filteredProducts = data; // Show all initially
+        this.filteredProducts = data;
         this.loading = false;
       },
       error: (err) => {
@@ -48,7 +52,48 @@ export class ProductList implements OnInit {
     });
   }
 
-  // --- ACTIONS (Matching HTML Events) ---
+  // ----- Cart actions with quantity -----
+  addToCart(product: Product): void {
+    if (!product.ecoCertified) {
+      alert('Only eco‑certified products can be added to the cart.');
+      return;
+    }
+
+    const currentQty = this.quantityMap[product.id!] || 0;
+    const newQty = currentQty + 1;
+
+    this.cartService.addToCart(product.id!, 1).subscribe({
+      next: () => {
+        this.quantityMap[product.id!] = newQty;
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Failed to add to cart');
+      }
+    });
+  }
+
+  decreaseQty(product: Product): void {
+    const currentQty = this.quantityMap[product.id!] || 0;
+    if (currentQty <= 0) return;
+
+    const updated = currentQty - 1;
+
+    this.cartService.addToCart(product.id!, -1).subscribe({
+      next: () => {
+        if (updated <= 0) {
+          delete this.quantityMap[product.id!];
+        } else {
+          this.quantityMap[product.id!] = updated;
+        }
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Failed to update cart');
+      }
+    });
+  }
+  // --------------------------------------
 
   onSearch(event: any): void {
     this.searchTerm = event.target.value.toLowerCase().trim();
@@ -60,18 +105,14 @@ export class ProductList implements OnInit {
     this.applyFilters();
   }
 
-  // --- FILTER LOGIC ---
   applyFilters(): void {
     this.filteredProducts = this.products.filter(p => {
-      // 1. Search Text Match (Checks Name or Category)
       const text = this.searchTerm;
-      const matchSearch = !text || 
-                          (p.name && p.name.toLowerCase().includes(text)) || 
-                          (p.category && p.category.toLowerCase().includes(text));
-      
-      // 2. Eco Certified Match
-      const matchEco = !this.isEcoOnly || p.ecoCertified;
+      const matchSearch = !text ||
+        (p.name && p.name.toLowerCase().includes(text)) ||
+        (p.category && p.category.toLowerCase().includes(text));
 
+      const matchEco = !this.isEcoOnly || p.ecoCertified;
       return matchSearch && matchEco;
     });
   }

@@ -1,1 +1,60 @@
-<p>cart page</p>
+<div class="cart-page">
+  <div class="cart-card">
+
+    <div *ngIf="isLoading" class="cart-loading">Loading cart...</div>
+
+    <div *ngIf="!isLoading && cartSummary">
+
+      <div *ngIf="cartSummary?.items?.length === 0" class="empty-cart">
+        Your cart is empty.
+      </div>
+
+      <!-- SINGLE loop only -->
+      <div *ngFor="let line of cartSummary?.items" class="cart-line">
+        <div class="info">
+          <div class="name">
+            {{ line.product.name }}
+            <span *ngIf="line.product.ecoCertified" class="eco-badge">
+              Eco Certified
+            </span>
+          </div>
+          <div class="details">
+            Qty: {{ line.quantity }}
+            • Price: ₹{{ line.product.price }}
+            • Carbon: {{ line.product.carbonImpact }} kg
+          </div>
+        </div>
+
+        <button (click)="remove(line)">Remove</button>
+      </div>
+
+      <div class="summary">
+        <p>
+          Total price:
+          ₹{{ (cartSummary?.totalPrice || 0) | number:'1.2-2' }}
+        </p>
+
+        <p>
+          Total carbon used:
+          {{ (cartSummary?.totalCarbonUsed || 0) | number:'1.2-2' }} kg
+        </p>
+
+        <p *ngIf="(cartSummary?.totalCarbonSaved || 0) > 0">
+          Carbon saved:
+          {{ (cartSummary?.totalCarbonSaved || 0) | number:'1.2-2' }} kg
+        </p>
+
+        <p *ngIf="cartSummary?.ecoSuggestion">
+          {{ cartSummary.ecoSuggestion }}
+        </p>
+
+        <button class="checkout-btn"
+                [disabled]="!cartSummary?.items || cartSummary.items.length === 0"
+                (click)="checkout()">
+          Checkout
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

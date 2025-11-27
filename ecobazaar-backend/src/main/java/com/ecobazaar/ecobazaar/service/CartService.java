@@ -1,4 +1,3 @@
-
 package com.ecobazaar.ecobazaar.service;
 
 import java.util.ArrayList;
@@ -25,8 +24,19 @@ public class CartService {
     }
 
     public CartItem addToCart(CartItem cartItem) {
-        return cartRepository.save(cartItem);
+
+        Optional<CartItem> existingOpt =
+            cartRepository.findByUserIdAndProductId(cartItem.getUserId(), cartItem.getProductId());
+
+        if (existingOpt.isPresent()) {
+            CartItem existing = existingOpt.get();
+            existing.setQuantity(existing.getQuantity() + cartItem.getQuantity());
+            return cartRepository.save(existing);
+        } else {
+            return cartRepository.save(cartItem);
+        }
     }
+
 
     public CartSummaryDto getCartSummary(Long userId) {
 
@@ -37,22 +47,24 @@ public class CartService {
         double totalCarbonSaved = 0;
         String ecoSuggestion = null;
 
+        List<CartSummaryDto.Line> lines = new ArrayList<>();
+
         for (CartItem item : cartItems) {
 
             Product product = productRepository.findById(item.getProductId())
                     .orElseThrow(() -> new RuntimeException("Product not found: " + item.getProductId()));
 
-   
             double price = product.getPrice() != null ? product.getPrice() : 0.0;
             double carbonImpact = product.getCarbonImpact() != null ? product.getCarbonImpact() : 0.0;
 
             totalPrice += price * item.getQuantity();
             totalCarbonUsed += carbonImpact * item.getQuantity();
 
-    
+            // add line so frontend can see product + ecoCertified
+            lines.add(new CartSummaryDto.Line(item.getId(), item.getQuantity(), product));
+
             if (!Boolean.TRUE.equals(product.getEcoCertified())) {
 
-      
                 String keyword = product.getName() != null ? product.getName() : "";
                 String[] words = keyword.split("\\s+");
                 String searchTerm = words.length > 0 ? words[words.length - 1].replaceAll("[^a-zA-Z]", "") : keyword;
@@ -67,7 +79,7 @@ public class CartService {
                     if (saved > 0) {
                         totalCarbonSaved += saved;
                         if (ecoSuggestion == null) {
-                            ecoSuggestion = "💡 Switch to " + ecoAlt.get().getName()
+                            ecoSuggestion = "Switch to " + ecoAlt.get().getName()
                                     + " and save " + String.format("%.2f", saved) + " kg CO₂!";
                         }
                     }
@@ -76,7 +88,7 @@ public class CartService {
         }
 
         return new CartSummaryDto(
-                cartItems,
+                lines,
                 totalPrice,
                 totalCarbonUsed,
                 totalCarbonSaved,
@@ -87,4 +99,10 @@ public class CartService {
     public void removeFromCart(Long id) {
         cartRepository.deleteById(id);
     }
+ // In CartService.java
+    public void clearCart(Long userId) {
+        List<CartItem> items = cartRepository.findByUserId(userId);
+        cartRepository.deleteAll(items);
+    }
+
 }

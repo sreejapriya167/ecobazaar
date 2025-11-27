@@ -25,7 +25,6 @@
     color: $primary-color;
     border: none;
     border-radius: $border-radius-pill;
-    box-shadow: $box-shadow-light;
     padding: 0.45rem 1.4rem;
     font-size: $font-size-base;
     font-weight: 500;
@@ -37,7 +36,6 @@
     &:focus {
       background: $primary-light;
       color: $white;
-      box-shadow: $box-shadow-hover;
       transform: translateY(-2px); // Add a subtle lift
     }
   }

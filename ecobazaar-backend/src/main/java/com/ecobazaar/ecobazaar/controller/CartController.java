@@ -1,6 +1,8 @@
 package com.ecobazaar.ecobazaar.controller;
 
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -45,10 +47,27 @@ public class CartController {
         return cartService.getCartSummary(currentUser.getId());
     }
 
-    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @PreAuthorize("hasAnyAuthority('ROLE_USER','ROLE_SELLER','ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public String removeFromCart(@PathVariable Long id) {
         cartService.removeFromCart(id);
-        return "Item Removed from Cart!";
+        return "Item removed";
     }
+
+
+    
+    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @PostMapping("/checkout")
+    public Map<String, String> checkout() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String email = auth.getName();
+        User currentUser = userRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+        cartService.clearCart(currentUser.getId());
+
+        return Map.of("message", "Checkout successful");
+    }
+
+
+
 }

@@ -1,12 +1,37 @@
-// src/main/java/com/ecobazzar/ecobazzar/dto/CartSummaryDto.java
+// src/main/java/com/ecobazaar/ecobazaar/dto/CartSummaryDto.java
 package com.ecobazaar.ecobazaar.dto;
 
 import java.util.List;
-import com.ecobazaar.ecobazaar.model.CartItem;
+import com.ecobazaar.ecobazaar.model.Product;
 
 public class CartSummaryDto {
 
-    private List<CartItem> items;
+    // NEW inner DTO for each cart entry
+    public static class Line {
+        private Long cartItemId;
+        private int quantity;
+        private Product product;  // includes ecoCertified, price, etc.
+
+        public Line() {}
+
+        public Line(Long cartItemId, int quantity, Product product) {
+            this.cartItemId = cartItemId;
+            this.quantity = quantity;
+            this.product = product;
+        }
+
+        public Long getCartItemId() { return cartItemId; }
+        public void setCartItemId(Long cartItemId) { this.cartItemId = cartItemId; }
+
+        public int getQuantity() { return quantity; }
+        public void setQuantity(int quantity) { this.quantity = quantity; }
+
+        public Product getProduct() { return product; }
+        public void setProduct(Product product) { this.product = product; }
+    }
+
+    // use Line instead of CartItem
+    private List<Line> items;
     private double totalPrice;
     private double totalCarbonUsed;   // kg
     private double totalCarbonSaved;  // kg
@@ -14,7 +39,8 @@ public class CartSummaryDto {
 
     public CartSummaryDto() {}
 
-    public CartSummaryDto(List<CartItem> items, double totalPrice,
+    // constructor must match what you call in CartService
+    public CartSummaryDto(List<Line> items, double totalPrice,
                           double totalCarbonUsed, double totalCarbonSaved,
                           String ecoSuggestion) {
         this.items = items;
@@ -24,8 +50,8 @@ public class CartSummaryDto {
         this.ecoSuggestion = ecoSuggestion;
     }
 
-    public List<CartItem> getItems() { return items; }
-    public void setItems(List<CartItem> items) { this.items = items; }
+    public List<Line> getItems() { return items; }
+    public void setItems(List<Line> items) { this.items = items; }
 
     public double getTotalPrice() { return totalPrice; }
     public void setTotalPrice(double totalPrice) { this.totalPrice = totalPrice; }

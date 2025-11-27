@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { Home } from './pages/home/home';
 import { AuthComponent } from './pages/auth/auth'; // ✅ The merged component
 import { Admin } from './pages/admin/admin';
-import { Cart } from './pages/cart/cart';
+import { CartComponent } from './pages/cart/cart';
 import { ProductList } from './pages/product-list/product-list'; 
 import { AuthGuard } from './guards/auth.guard';
 import { Dashboard } from './pages/dashboard/dashboard';
@@ -24,7 +24,7 @@ export const routes: Routes = [
     data: { isSignUp: true } 
   },
 
-  { path: 'cart', component: Cart },
+  { path: 'cart', component: CartComponent },
   { path: 'products', component: ProductList },
   { path: 'dashboard', component: Dashboard, canActivate: [AuthGuard] },
 

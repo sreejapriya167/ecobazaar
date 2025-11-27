@@ -1,0 +1,145 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/components' as *;
+
+/* Full-page container so footer stays at bottom */
+.cart-page {
+  min-height: calc(100vh - 80px); /* adjust 80px if your navbar height differs */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem 1rem 3rem;
+}
+
+/* Main card – white glass, no grey inner block */
+.cart-card {
+  width: 100%;
+  max-width: 900px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+  padding: 1.6rem 1.8rem;
+  color: #1b3b22;
+}
+
+/* Loading text & empty message */
+.cart-loading,
+.empty-cart {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Cart line cards */
+.cart-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 0.75rem;
+  border-radius: 16px;
+  background: rgba(232, 255, 239, 0.9);
+  border: 1px solid rgba(190, 230, 200, 0.8);
+  color: #204127;
+}
+
+.cart-line .info {
+  flex: 1;
+}
+
+.cart-line .name {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.cart-line .details {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* Remove button */
+.cart-line button {
+  background: transparent;
+  border: 1px solid rgba(200, 60, 60, 0.7);
+  color: #b03030;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  transition: all 0.2s ease;
+}
+
+.cart-line button:hover {
+  background: rgba(200, 60, 60, 0.1);
+}
+
+/* Eco badge */
+.eco-badge {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(0, 200, 83, 0.12);
+  color: #1b5e20;
+  font-size: 0.75rem;
+  border: 1px solid rgba(0, 200, 83, 0.6);
+}
+
+/* Summary area: just text + button */
+.summary {
+  margin-top: 1.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.summary p {
+  margin: 0.2rem 0;
+}
+
+/* Checkout button – match navbar green */
+.checkout-btn {
+  margin-top: 0.9rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.4px;
+  background: linear-gradient(135deg, #2e7d32, #00c853); /* navbar gradient */
+  color: #ffffff;
+  box-shadow: 0 6px 20px rgba(0, 200, 83, 0.45);
+  transition: all 0.2s ease;
+}
+
+.checkout-btn:hover:not(:disabled) {
+  filter: brightness(1.06);
+  box-shadow: 0 9px 24px rgba(0, 200, 83, 0.65);
+}
+
+.checkout-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  filter: grayscale(0.3);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .cart-page {
+    padding: 1.2rem 0.7rem 2.5rem;
+  }
+
+  .cart-card {
+    padding: 1.1rem 1.2rem;
+  }
+
+  .cart-line {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+
+  .cart-line button {
+    align-self: flex-end;
+  }
+}

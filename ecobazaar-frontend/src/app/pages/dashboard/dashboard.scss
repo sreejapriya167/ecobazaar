@@ -144,7 +144,107 @@
   button { width: 100%; padding: 0.8rem; }
   .btn-disabled { background: #eee; color: #999; cursor: not-allowed; border: 1px solid #ddd; }
 }
+/* Add this to your dashboard.component.scss or create a new file */
 
+// --- Chart Panel Container ---
+.chart-panel {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
+  min-height: 320px;
+  border: 1px solid rgba(0,0,0,0.05);
+
+  .panel-head {
+    margin-bottom: 2rem;
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #1f2937;
+      margin-bottom: 0.3rem;
+    }
+    span {
+      font-size: 0.9rem;
+      color: #9ca3af;
+      font-weight: 500;
+    }
+  }
+}
+
+// --- The Graph Layout ---
+.chart-graph {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between; // Space bars evenly
+  height: 200px; // Fixed height for the chart area
+  gap: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed #f3f4f6; // Subtle bottom line
+}
+
+// --- The Individual Bars ---
+.bar {
+  flex: 1;
+  max-width: 45px; // Keep them slim like the image
+  background: #e5e7eb; // Light gray default
+  border-radius: 8px; // Rounded tops
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  // Animation: Grow from bottom
+  transform-origin: bottom;
+  animation: barPop 0.8s ease-out forwards;
+  opacity: 0; // Start hidden for animation
+
+  // Hover Effect
+  &:hover {
+    background: #d1d5db;
+    transform: scaleY(1.05);
+    
+    // Tooltip on hover
+    &::after {
+      content: attr(data-value); // Shows the value!
+      position: absolute;
+      top: -35px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1f2937;
+      color: white;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      white-space: nowrap;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      z-index: 10;
+    }
+  }
+
+  // The "Highest/Active" Bar (Green)
+  &.active {
+    background: #10b981; // Vibrant Green
+    box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2); // Green glow
+    
+    &:hover {
+      background: #059669;
+    }
+  }
+}
+
+// --- Loading Animation ---
+@keyframes barPop {
+  0% {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
 .empty-state { text-align: center; color: #999; padding: 3rem 0; font-style: italic; }
 
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }

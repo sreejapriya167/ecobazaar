@@ -6,8 +6,7 @@
       <p class="role-badge">Current Role: <strong>SELLER</strong></p>
     </div>
     <div class="header-actions">
-      <button class="glass-btn btn-yellow" routerLink="/add-product">+ Add New Product</button>
-    </div>
+<button class="glass-btn btn-yellow" type="button" (click)="openModal()">+ Add New Product</button>    </div>
   </header>
 
   <div class="seller-stats-row">
@@ -61,4 +60,70 @@
 
   </div>
 
+</div>
+
+<!-- 👇 ADD THIS MODAL AT THE BOTTOM 👇 -->
+<div class="modal-backdrop" *ngIf="showModal" (click)="closeModal()">
+  <div class="modal-content glass-panel" (click)="$event.stopPropagation()">
+    
+    <div class="modal-header">
+      <h2>Add New Product 🌱</h2>
+      <p>Product will be listed after Admin Approval.</p>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" #f="ngForm">
+      
+      <div class="form-group">
+        <label>Product Name</label>
+        <input type="text" name="name" [(ngModel)]="newProduct.name" required placeholder="e.g. Bamboo Toothbrush">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Price (₹)</label>
+          <input type="number" name="price" [(ngModel)]="newProduct.price" required placeholder="150">
+        </div>
+        <div class="form-group">
+          <label>Carbon Impact (kg)</label>
+          <input type="number" name="carbon" [(ngModel)]="newProduct.carbonImpact" required placeholder="0.5">
+        </div>
+      </div>
+
+      <div class="form-group">
+  <label>Product Image</label>
+  <div class="file-upload-wrapper">
+    <input type="file" (change)="onFileSelected($event)" accept="image/*" class="file-input">
+    
+    <img *ngIf="newProduct.imageUrl" [src]="newProduct.imageUrl" class="image-preview">
+  </div>
+</div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea name="details" [(ngModel)]="newProduct.details" rows="3" required placeholder="Describe your eco-friendly product..."></textarea>
+      </div>
+
+      <!-- Category Dropdown -->
+      <div class="form-group">
+        <label>Category</label>
+        <select name="category" [(ngModel)]="newProduct.category" required>
+          <option value="" disabled selected>Select a Category</option>
+          <option value="Lifestyle">Lifestyle</option>
+          <option value="Groceries">Food</option>
+          <option value="Fashion">Fashion</option>
+          <option value="Beauty">Beauty</option>
+          <option value="Home">Home</option>
+          <option value="Kitchen">Kitchen</option>
+        </select>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="glass-btn btn-outline" (click)="closeModal()">Cancel</button>
+        <button type="submit" class="glass-btn btn-green" [disabled]="!f.valid || isLoading">
+          {{ isLoading ? 'Submitting...' : 'Submit for Approval' }}
+        </button>
+      </div>
+
+    </form>
+  </div>
 </div>

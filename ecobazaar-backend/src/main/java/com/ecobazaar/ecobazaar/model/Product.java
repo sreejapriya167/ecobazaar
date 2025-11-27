@@ -15,6 +15,7 @@ public class Product {
     private Double price;
     private Double carbonImpact;
     private String imageUrl;
+    private String category;
 
     @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean ecoCertified = false;
@@ -27,6 +28,12 @@ public class Product {
     private User seller;
 
     // ==================== GETTERS & SETTERS ====================
+    public String getCategory() {
+        return category;
+    }
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

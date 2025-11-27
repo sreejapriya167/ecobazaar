@@ -8,8 +8,11 @@
 
     <div class="search-bar-container glass-panel">
       <span class="material-icons search-icon">search</span>
-      <input type="text" placeholder="Search eco products..." (input)="onSearch($event)">
-      
+      <input
+        type="text"
+        placeholder="Search eco products..."
+        (input)="onSearch($event)">
+
       <div class="eco-toggle">
         <input type="checkbox" id="ecoCheck" (change)="toggleEcoOnly()">
         <label for="ecoCheck">
@@ -21,19 +24,22 @@
 
   <div class="products-grid">
     <div class="product-card" *ngFor="let product of filteredProducts">
-      
+
       <div class="badge-pill" *ngIf="product.ecoCertified">
         <span class="material-icons">verified</span> Certified
       </div>
 
       <div class="img-container">
-        <img [src]="product.imageUrl || 'assets/placeholder.png'" alt="{{ product.name }}">
+        <img
+          [src]="product.imageUrl || 'assets/placeholder.png'"
+          alt="{{ product.name }}"
+          class="product-image">
       </div>
 
       <div class="card-details">
         <h3>{{ product.name }}</h3>
         <div class="price">₹{{ product.price }}</div>
-        
+
         <div class="impact-row">
           <span class="globe">🌍</span>
           <span>{{ product.carbonImpact || '0.5' }} kg CO₂ impact</span>
@@ -43,7 +49,25 @@
           {{ product.ecoCertified ? 'Eco-approved product' : 'Awaiting certification' }}
         </div>
 
-        <button class="add-btn">Add to Cart</button>
+        <!-- Cart actions -->
+        <div class="cart-actions">
+          <!-- If not in cart yet: show Add to Cart -->
+          <button
+            *ngIf="!quantityMap[product.id!]"
+            (click)="addToCart(product)"
+            [disabled]="!product.ecoCertified"
+            class="add-btn">
+            Add to Cart
+          </button>
+
+          <!-- If already in cart: show quantity stepper -->
+          <div *ngIf="quantityMap[product.id!]" class="qty-stepper">
+            <button (click)="decreaseQty(product)">−</button>
+            <span>{{ quantityMap[product.id!] }}</span>
+            <button (click)="addToCart(product)">+</button>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
